@@ -1,10 +1,9 @@
-Error.stackTraceLimit = 100
+Error.stackTraceLimit = 100;
 
 // Point the loader to the Monaco files on the CDN
 require.config({
   paths: {
     vs: "https://unpkg.com/monaco-editor@latest/min/vs",
-    // vs: "./lib/monaco/min/vs",
   },
 });
 
@@ -28,7 +27,7 @@ window.MonacoEnvironment = {
 // Create the editor once Monaco is ready
 require(["vs/editor/editor.main"], function () {
   window.editor = monaco.editor.create(document.getElementById("editor"), {
-      value: `<style>
+    value: `<style>
     body {
         margin: 0;
     }
@@ -64,8 +63,8 @@ require(["vs/editor/editor.main"], function () {
     <div class="child">C8</div>
     <div class="child">C9</div>
 </div>`
-        .split("\n")
-        .join("\n"),
+      .split("\n")
+      .join("\n"),
     // value: ["d"].join("\n"),
     language: "html",
     theme: "vs-light",
@@ -74,8 +73,6 @@ require(["vs/editor/editor.main"], function () {
     padding: {
       top: 16, // pixels from the top
     },
-    // fontFamily: "JetBrains Mono, monospace",
-    // fontSize: 24,
     wordWrap: "on", // wrap by default
     wordWrapMinified: true, // also wrap very long/minified lines
     wordWrapColumn: 0, // wrap at viewport width
@@ -89,19 +86,15 @@ require(["vs/editor/editor.main"], function () {
     const doc = previewFrame.contentDocument || previewFrame.contentWindow.document;
     const appDiv = doc.getElementById("app");
     if (!appDiv) return;
-    // appDiv.innerHTML = editor.getValue(); // Just updates the target section
     const value = editor.getValue()?.trim();
     if (value === "") {
-      // previewFrame.srcdoc = `<style> body { background: #fff; user-select: none; } </style> <div style="width: max-content; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.1; font-family: monospace; font-size: 550%; font-weight: 900;">{&lt;&gt;&lt;/&gt;}</div>`;
       appDiv.innerHTML = `<style> body { background: transparent; user-select: none; } </style> <div style="width: max-content; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.1; font-family: monospace; font-size: 550%; font-weight: 900;">{&lt;&gt;&lt;/&gt;}</div>`;
     } else {
-      // previewFrame.srcdoc = editor.getValue();
       appDiv.innerHTML = value; // Just updates the target section
     }
     previewFrame.onload = () => {};
   };
 
-  //   previewFrame.srcdoc = editor.getValue();
   previewEditorContent();
   let rafId;
   editor.onDidChangeModelContent(() => {
