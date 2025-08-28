@@ -7,28 +7,43 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <div class="app-toolbar border-bottom">
+      <div class="app-toolbar-label" id="brand"><span>EDTTRRR</span></div>
+      <div class="app-toolbar-separator"></div>
+      <div class="app-toolbar-label" id="zoomLevel">0%</div>
+    </div>
     <div class="container">
       <div class="left-pane" id="left-pane">
         <div class="preview-wrapper" id="preview-wrapper">
           <iframe class="preview" id="preview"></iframe>
         </div>
-        <div class="preview-meta-toolbar border-top">
-          <!-- <div class="preview-meta-toolbar-label" id="dimensions"></div> -->
-          <div class="preview-meta-toolbar-label" id="dimensions"></div>
-          <button class="preview-meta-toolbar-button" onclick="EDTTRRR.togglePin(this)">Unpin</button>
-          <div class="toolbar-separator"></div>
-          <div class="preview-meta-toolbar-label" id="zoomLevelPreview">0%</div>
-          <button class="preview-meta-toolbar-button" onclick="EDTTRRR.toggleMaxScreenPreview(this)">Maximize Preview</button>
+        <div class="app-toolbar border-top">
+          <div class="app-toolbar-label" id="dimensions"></div>
+          <button class="app-toolbar-button" onclick="EDTTRRR.togglePin(this)">Unpin</button>
+          <div class="app-toolbar-separator"></div>
+          <button class="app-toolbar-button" onclick="EDTTRRR.toggleMaxScreenPreview(this)">Maximize</button>
         </div>
       </div>
       <div class="right-pane" id="right-pane">
-        <div class="editor-wrapper">
+        <div class="editor-wrapper" id="editor-wrapper">
           <div class="editor" id="editor"></div>
         </div>
-        <div class="preview-meta-toolbar border-top">
-          <div class="toolbar-separator"></div>
-          <div class="preview-meta-toolbar-label" id="zoomLevelEditor">0%</div>
-          <button class="preview-meta-toolbar-button" onclick="EDTTRRR.toggleMaxScreenEditor(this)">Maximize Editor</button>
+        <div class="elements-wrapper display-none" id="elements-wrapper">
+          <div class="elements" id="elements">Elements panel</div>
+        </div>
+        <div class="styles-wrapper display-none" id="styles-wrapper">
+          <div class="styles" id="styles">Styles panel</div>
+        </div>
+        <div class="variables-wrapper display-none" id="variables-wrapper">
+          <div class="variables" id="variables">Variables panel</div>
+        </div>
+        <div class="app-toolbar border-top">
+          <button class="app-toolbar-button toolbar-is-active-item" onclick="EDTTRRR.viewTab('source')" id="app-toolbar-button-tab-source">Source</button>
+          <button class="app-toolbar-button" onclick="EDTTRRR.viewTab('elements')" id="app-toolbar-button-tab-elements">Elements</button>
+          <button class="app-toolbar-button" onclick="EDTTRRR.viewTab('styles')" id="app-toolbar-button-tab-styles">Styles</button>
+          <button class="app-toolbar-button" onclick="EDTTRRR.viewTab('variables')" id="app-toolbar-button-tab-variables">Variables</button>
+          <div class="app-toolbar-separator"></div>
+          <button class="app-toolbar-button" onclick="EDTTRRR.toggleMaxScreenEditor(this)">Maximize</button>
         </div>
       </div>
     </div>

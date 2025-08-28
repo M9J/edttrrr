@@ -47,6 +47,7 @@ body {
   flex-direction: column;
   width: 100%;
   min-width: 50%;
+  position: relative;
 }
 
 .editor {
@@ -99,11 +100,6 @@ body {
 }
 
 .app-toolbar {
-  padding: 8px 24px;
-  border-top: var(--brand-border);
-}
-
-.preview-meta-toolbar {
   font-family: sans-serif;
   position: sticky;
   top: 0;
@@ -113,24 +109,25 @@ body {
   gap: 1px;
 }
 
-.preview-meta-toolbar-label,
-.preview-meta-toolbar-button {
+.app-toolbar-label,
+.app-toolbar-button {
   width: auto;
-  padding: 8px 16px;
+  padding: 4px 8px;
   font-size: 75%;
   background-color: #fff;
+  user-select: none;
 }
 
-.preview-meta-toolbar-button {
+.app-toolbar-button {
   cursor: pointer;
   border: 0;
 }
 
-.preview-meta-toolbar-button:hover {
+.app-toolbar-button:hover {
   background: rgba(255, 255, 255, 0.5);
 }
 
-.preview-meta-toolbar-group {
+.app-toolbar-group {
   display: flex;
   align-items: center;
 }
@@ -139,7 +136,11 @@ body {
   display: none;
 }
 
-.toolbar-separator {
+.display-flex {
+  display: flex;
+}
+
+.app-toolbar-separator {
   flex: 1;
   background-color: #fff;
 }
@@ -155,4 +156,24 @@ body {
 
 .border-bottom {
   border-bottom: var(--brand-border);
+}
+
+.toolbar-is-active-item {
+  color: #4444dd;
+}
+
+#brand {
+  background-color: #fff;
+  color: #000;
+  font-weight: 900;
+  font-size: 75%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editor-wrapper, .elements-wrapper, .styles-wrapper, .variables-wrapper {
+  flex: 1;
+  height: 100%;
+  width: 100%;
 }

@@ -15,9 +15,6 @@ function initResizePreviewListener() {
     for (let entry of entries) {
       const { width, height } = entry.contentRect;
       output.innerHTML = `${Math.round(width)} &times; ${Math.round(height)} pixels`;
-      const preview = document.getElementById("preview");
-      preview.style.width = width + "px";
-      preview.style.height = height + "px";
     }
   });
 
@@ -29,11 +26,13 @@ window.EDTTRRR.toggleMaxScreenPreview = (el) => {
   const rightPane = document.getElementById("right-pane");
   if (isMaxScreenPreview) {
     rightPane.classList.remove("display-none");
-    el.textContent = "Maximize Preview";
+    el.textContent = "Maximize";
+    el.classList.remove("toolbar-is-active-item");
     isMaxScreenPreview = false;
   } else {
     rightPane.classList.add("display-none");
-    el.textContent = "Restore Preview";
+    el.textContent = "Restore";
+    el.classList.add("toolbar-is-active-item");
     isMaxScreenPreview = true;
   }
 };
@@ -43,24 +42,22 @@ window.EDTTRRR.toggleMaxScreenEditor = (el) => {
   const leftPane = document.getElementById("left-pane");
   if (isMaxScreenEditor) {
     leftPane.classList.remove("display-none");
-    el.textContent = "Maximize Editor";
+    el.textContent = "Maximize";
+    el.classList.remove("toolbar-is-active-item");
     isMaxScreenEditor = false;
   } else {
     leftPane.classList.add("display-none");
-    el.textContent = "Restore Editor";
+    el.textContent = "Restore";
+    el.classList.add("toolbar-is-active-item");
     isMaxScreenEditor = true;
   }
 };
 
 function updateZoomDisplay() {
   const zoom = Math.round(window.devicePixelRatio * 100);
-  document.getElementById("zoomLevelPreview").textContent = `${zoom}%`;
-  document.getElementById("zoomLevelEditor").textContent = `${zoom}%`;
+  document.getElementById("zoomLevel").textContent = `${zoom}%`;
 }
-
 updateZoomDisplay();
-
-// Optional: update on resize or interval
 window.addEventListener("resize", updateZoomDisplay);
 
 let isPreviewPinned = false;
@@ -74,5 +71,44 @@ window.EDTTRRR.togglePin = (el) => {
     previewWrapper.classList.add("center-content");
     el.textContent = "Pin";
     isPreviewPinned = true;
+  }
+};
+
+let currentEditorTab = "source";
+window.EDTTRRR.viewTab = (tab = "source") => {
+  currentEditorTab = tab;
+  const sourcePanel = document.getElementById("editor-wrapper");
+  const elementsPanel = document.getElementById("elements-wrapper");
+  const stylesPanel = document.getElementById("styles-wrapper");
+  const variablesPanel = document.getElementById("variables-wrapper");
+  sourcePanel.classList.add("display-none");
+  elementsPanel.classList.add("display-none");
+  stylesPanel.classList.add("display-none");
+  variablesPanel.classList.add("display-none");
+  if (tab === "source") {
+    sourcePanel.classList.remove("display-none");
+  } else if (tab === "elements") {
+    elementsPanel.classList.remove("display-none");
+  } else if (tab === "styles") {
+    stylesPanel.classList.remove("display-none");
+  } else if (tab === "variables") {
+    variablesPanel.classList.remove("display-none");
+  }
+  const sourceTabButton = document.getElementById("app-toolbar-button-tab-source");
+  const elementsTabButton = document.getElementById("app-toolbar-button-tab-elements");
+  const stylesTabButton = document.getElementById("app-toolbar-button-tab-styles");
+  const variablesTabButton = document.getElementById("app-toolbar-button-tab-variables");
+  sourceTabButton.classList.remove("toolbar-is-active-item");
+  elementsTabButton.classList.remove("toolbar-is-active-item");
+  stylesTabButton.classList.remove("toolbar-is-active-item");
+  variablesTabButton.classList.remove("toolbar-is-active-item");
+  if (tab === "source") {
+    sourceTabButton.classList.add("toolbar-is-active-item");
+  } else if (tab === "elements") {
+    elementsTabButton.classList.add("toolbar-is-active-item");
+  } else if (tab === "styles") {
+    stylesTabButton.classList.add("toolbar-is-active-item");
+  } else if (tab === "variables") {
+    variablesTabButton.classList.add("toolbar-is-active-item");
   }
 };
