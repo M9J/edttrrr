@@ -1,5 +1,7 @@
 :root {
   --brand-border: 1px solid #aaa;
+  --brand-border-color: #aaa;
+  --accent-color: #4444dd;
 }
 
 * {
@@ -33,11 +35,10 @@ body {
   border: 0;
   display: flex;
   flex-direction: column;
-  border-right: var(--brand-border);
   box-sizing: border-box;
   min-height: 0;
   width: 100%;
-  min-width: 50%;
+  min-width: calc(50% - 4px);
   flex: 1;
 }
 
@@ -46,7 +47,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-width: 50%;
+  min-width: calc(50% - 4px);
   position: relative;
 }
 
@@ -106,7 +107,7 @@ body {
   background: #aaa;
   display: flex;
   justify-content: space-between;
-  gap: 1px;
+  /* gap: 1px; */
 }
 
 .app-toolbar-label,
@@ -116,6 +117,9 @@ body {
   font-size: 75%;
   background-color: #fff;
   user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .app-toolbar-button {
@@ -129,7 +133,6 @@ body {
 
 .app-toolbar-group {
   display: flex;
-  align-items: center;
 }
 
 .display-none {
@@ -159,7 +162,13 @@ body {
 }
 
 .toolbar-is-active-item {
-  color: #4444dd;
+  color: var(--accent-color);
+}
+
+.toolbar-is-active-tab {
+  color: var(--accent-color);
+  border-top: 1px solid var(--accent-color);
+  margin-top: -1px;
 }
 
 #brand {
@@ -172,8 +181,47 @@ body {
   justify-content: center;
 }
 
-.editor-wrapper, .elements-wrapper, .styles-wrapper, .variables-wrapper {
+#brand {
+  letter-spacing: 1px;
+}
+
+#brand span {
+  color: var(--accent-color);
+}
+
+.editor-wrapper,
+.elements-wrapper,
+.styles-wrapper {
   flex: 1;
   height: 100%;
   width: 100%;
+}
+
+.app-toolbar-icon-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+.flex-direction-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.resize-handle-horizontal {
+  width: 1px;
+  background-color: var(--brand-border-color);
+  height: 100%;
+  position: relative;
+  content: "";
+  z-index: 9;
+  cursor: col-resize;
+  transition: width 0.1s ease;
+}
+.resize-handle-horizontal:hover {
+  width: 8px;
+  background-color: var(--accent-color);
+  transition: width 0.1s ease;
 }

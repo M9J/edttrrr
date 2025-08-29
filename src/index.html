@@ -2,30 +2,48 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>{&lt;&gt;&lt;/&gt;} Edttrrr</title>
+    <title>{&lt;&gt;&lt;/&gt;} &bullet; EDTTRRR</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <div class="app-toolbar border-bottom">
-      <div class="app-toolbar-label" id="brand"><span>EDTTRRR</span></div>
+      <div class="app-toolbar-label" id="brand"><span>&bullet;</span>EDTTRRR</div>
       <div class="app-toolbar-separator"></div>
-      <div class="app-toolbar-label" id="zoomLevel">0%</div>
+      <button class="app-toolbar-button" onclick="EDTTRRR.swapPanes()" title="Swap editor and preview panes">
+        <img class="app-toolbar-icon-image" src="../assets/icons/arrow-swap-20-filled.svg" />
+      </button>
+      <div class="app-toolbar-label" id="browserZoomLevel">0%</div>
     </div>
-    <div class="container">
+    <div class="container" id="container">
       <div class="left-pane" id="left-pane">
         <div class="preview-wrapper" id="preview-wrapper">
           <iframe class="preview" id="preview"></iframe>
         </div>
         <div class="app-toolbar border-top">
-          <div class="app-toolbar-label" id="dimensions"></div>
-          <button class="app-toolbar-button" onclick="EDTTRRR.togglePin(this)">Unpin</button>
+          <div class="app-toolbar-label" id="dimensions">000 &times; 000 pixels</div>
           <div class="app-toolbar-separator"></div>
-          <button class="app-toolbar-button" onclick="EDTTRRR.toggleMaxScreenPreview(this)">Maximize</button>
+          <button class="app-toolbar-button" id="toolbar-button-pin" onclick="EDTTRRR.togglePin()" title="Pin preview window to the top left anchor point">
+            <img
+              class="app-toolbar-icon-image"
+              src="../assets/icons/pin-12-filled.svg"
+              data-active-src="../assets/icons/pin-12-filled.svg"
+              data-inactive-src="../assets/icons/pin-12-regular.svg"
+            />
+          </button>
+          <button class="app-toolbar-button" id="toolbar-button-max-screen-preview" onclick="EDTTRRR.toggleMaxScreenPreview()" title="Expand or collapse preview window">
+            <img
+              class="app-toolbar-icon-image"
+              src="../assets/icons/full-screen-maximize-16-filled.svg"
+              data-active-src="../assets/icons/full-screen-maximize-16-filled.svg"
+              data-inactive-src="../assets/icons/full-screen-minimize-16-filled.svg"
+            />
+          </button>
         </div>
       </div>
+      <div class="resize-handle-horizontal" id="resize-handle-horizontal"></div>
       <div class="right-pane" id="right-pane">
-        <div class="editor-wrapper" id="editor-wrapper">
+        <div class="editor-wrapper" id="source-wrapper">
           <div class="editor" id="editor"></div>
         </div>
         <div class="elements-wrapper display-none" id="elements-wrapper">
@@ -34,50 +52,23 @@
         <div class="styles-wrapper display-none" id="styles-wrapper">
           <div class="styles" id="styles">Styles panel</div>
         </div>
-        <div class="variables-wrapper display-none" id="variables-wrapper">
-          <div class="variables" id="variables">Variables panel</div>
-        </div>
         <div class="app-toolbar border-top">
-          <button class="app-toolbar-button toolbar-is-active-item" onclick="EDTTRRR.viewTab('source')" id="app-toolbar-button-tab-source">Source</button>
-          <button class="app-toolbar-button" onclick="EDTTRRR.viewTab('elements')" id="app-toolbar-button-tab-elements">Elements</button>
-          <button class="app-toolbar-button" onclick="EDTTRRR.viewTab('styles')" id="app-toolbar-button-tab-styles">Styles</button>
-          <button class="app-toolbar-button" onclick="EDTTRRR.viewTab('variables')" id="app-toolbar-button-tab-variables">Variables</button>
+          <button class="app-toolbar-button" onclick="EDTTRRR.switchTab('source')" id="app-toolbar-button-tab-source">Source</button>
+          <button class="app-toolbar-button" onclick="EDTTRRR.switchTab('elements')" id="app-toolbar-button-tab-elements">Elements</button>
+          <button class="app-toolbar-button" onclick="EDTTRRR.switchTab('styles')" id="app-toolbar-button-tab-styles">Styles</button>
           <div class="app-toolbar-separator"></div>
-          <button class="app-toolbar-button" onclick="EDTTRRR.toggleMaxScreenEditor(this)">Maximize</button>
+          <button class="app-toolbar-button" id="toolbar-button-max-screen-editor" onclick="EDTTRRR.toggleMaxScreenEditor()" title="Expand or collapse editor window">
+            <img
+              class="app-toolbar-icon-image"
+              src="../assets/icons/full-screen-maximize-16-filled.svg"
+              data-active-src="../assets/icons/full-screen-maximize-16-filled.svg"
+              data-inactive-src="../assets/icons/full-screen-minimize-16-filled.svg"
+            />
+          </button>
         </div>
       </div>
     </div>
-    <!-- Load Monaco's AMD loader -->
     <script src="https://unpkg.com/monaco-editor@latest/min/vs/loader.js"></script>
-    <script>
-      function loadScript(src) {
-        return new Promise((resolve, reject) => {
-          const s = document.createElement("script");
-          s.src = src;
-          s.onload = resolve;
-          s.onerror = reject;
-          document.body.appendChild(s);
-        });
-      }
-
-      require.config({ paths: { vs: "https://unpkg.com/monaco-editor@latest/min/vs" } });
-
-      (async () => {
-        // 1️⃣ Wait for Monaco loader + dependencies
-        await new Promise((res) => {
-          require(["vs/editor/editor.main"], () => {
-            console.log("Monaco is ready");
-            res();
-          });
-        });
-
-        // 2️⃣ Load your main script
-        await loadScript("./script.js");
-        console.log("script.js loaded");
-      })().catch((err) => {
-        console.error("Loading sequence failed:", err);
-      });
-    </script>
-    <script src="./features.js"></script>
+    <script src="./edttrrr/loader/loader-edttrrr.js" type="module" defer></script>
   </body>
 </html>
