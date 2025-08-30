@@ -1,6 +1,9 @@
 import { getFromLocalStorage, setToLocalStorage } from "../utils/localStorage.js";
 import { initializeFeaturesApplication } from "./application/features-application-initialize.js";
-import { loadApplicationConfigurationFromLocalStorage, swapPanes } from "./application/features-application.js";
+import {
+  loadApplicationConfigurationFromLocalStorage,
+  swapPanes,
+} from "./application/features-application.js";
 import { switchTab, toggleMaxScreenEditor } from "./editor/features-editor.js";
 import { initializeFeaturesPreview } from "./preview/features-preview-initialize.js";
 import { toggleMaxScreenPreview, togglePin } from "./preview/features-preview.js";
