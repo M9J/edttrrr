@@ -67,7 +67,6 @@ body {
 
 .brand {
   font-family: "JetBrains Mono", monospace;
-  font-weight: 900;
 }
 
 .preview-wrapper {
@@ -175,7 +174,7 @@ body {
 #brand {
   background-color: #fff;
   color: #000;
-  font-weight: 900;
+  font-weight: 100;
   font-size: 75%;
   display: flex;
   align-items: center;
@@ -221,8 +220,8 @@ body {
   cursor: col-resize;
   transition: width 0.1s ease;
 }
-.resize-handle-horizontal:hover {
+/* .resize-handle-horizontal:hover {
   width: 8px;
   background-color: var(--accent-color);
   transition: width 0.1s ease;
-}
+} */

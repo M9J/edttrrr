@@ -17,7 +17,7 @@ export function initResizePreviewListener() {
 }
 
 export function toggleMaxScreenPreview(isMaxScreenPreview) {
-  const el = document.getElementById("toolbar-button-max-screen-editor");
+  const el = document.getElementById("toolbar-button-max-screen-preview");
   const img = el.querySelector(".app-toolbar-icon-image");
   if (isMaxScreenPreview) {
     rightPane.classList.remove("display-none");

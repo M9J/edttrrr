@@ -4,7 +4,7 @@ const leftPane = document.getElementById("left-pane");
 const resizeHandle = document.getElementById("resize-handle-horizontal");
 
 export function toggleMaxScreenEditor(isMaxScreenEditor) {
-  const el = document.getElementById("toolbar-button-max-screen-preview");
+  const el = document.getElementById("toolbar-button-max-screen-editor");
   const img = el.querySelector(".app-toolbar-icon-image");
   if (isMaxScreenEditor) {
     leftPane.classList.remove("display-none");
