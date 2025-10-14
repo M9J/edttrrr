@@ -1,6 +1,8 @@
+name: Build
 on: [workflow_call]
 jobs:
-  Build:
+  build-job:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

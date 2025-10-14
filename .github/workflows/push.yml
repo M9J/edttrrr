@@ -1,6 +1,8 @@
+name: Push
 on: [workflow_call]
 jobs:
-  Push:
+  build-job:
+    name: Push
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

@@ -15,10 +15,6 @@ build({
           from: ["src/**/*"],
           to: ["build/"],
         },
-        {
-          from: ["assets/**/*"],
-          to: ["build/assets"],
-        },
       ],
     }),
   ],
