@@ -19,7 +19,7 @@ let currentEditorTab = getFromLocalStorage("currentEditorTab") || "source";
 let isPreviewPinned = getFromLocalStorage("isPreviewPinned") || true;
 let isPanesSwapped = getFromLocalStorage("isPanesSwapped") || false;
 
-console.table(localStorage);
+// console.table(localStorage);
 
 loadApplicationConfigurationFromLocalStorage();
 

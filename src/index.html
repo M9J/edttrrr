@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>{&lt;&gt;&lt;/&gt;} &bullet; CodeEditor</title>
-    <link rel="shortcut icon" href="../assets/favicon.png" type="image/png">
+    <title>CodeEditor</title>
+    <link rel="shortcut icon" href="../assets/favicon.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="./style.css" />
   </head>
@@ -61,12 +61,12 @@
         <div class="editor-wrapper" id="source-wrapper">
           <div class="editor" id="editor"></div>
         </div>
-        <div class="elements-wrapper display-none" id="elements-wrapper">
+        <!-- <div class="elements-wrapper display-none" id="elements-wrapper">
           <div class="elements" id="elements">Elements panel</div>
         </div>
         <div class="styles-wrapper display-none" id="styles-wrapper">
           <div class="styles" id="styles">Styles panel</div>
-        </div>
+        </div> -->
         <div class="app-toolbar border-top">
           <!-- <button
             class="app-toolbar-button"
@@ -106,7 +106,9 @@
         </div>
       </div>
     </div>
-    <script src="https://unpkg.com/monaco-editor@latest/min/vs/loader.js"></script>
+    <!-- <script src="https://unpkg.com/monaco-editor@latest/min/vs/loader.js"></script> -->
+    <script src="./vs/loader.js"></script>
+    <script src="./index.js" type="module" defer></script>
     <script src="./edttrrr/loader/loader-edttrrr.js" type="module" defer></script>
   </body>
 </html>

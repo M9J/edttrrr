@@ -1,0 +1,9 @@
+name: Actions
+on: [push]
+jobs:
+  Build:
+    uses: ./.github/workflows/build.yml
+
+  Push:
+    needs: [build]
+    uses: ./.github/workflows/push.yml

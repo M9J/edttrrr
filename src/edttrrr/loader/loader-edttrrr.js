@@ -9,19 +9,7 @@ function loadScript(src) {
   });
 }
 
-require.config({ paths: { vs: "https://unpkg.com/monaco-editor@latest/min/vs" } });
-
 (async () => {
-  await new Promise((res) => {
-    require(["vs/editor/editor.main"], () => {
-      console.log("READY: Monaco Editor");
-      res();
-    });
-  });
-
-  await loadScript("/src/edttrrr/dependencies/monaco-editor/monaco-editor-setup.js");
-  console.log("LOADED: monaco-editor-setup.js");
-
   await loadScript("/src/edttrrr/edttrrr.js");
   console.log("LOADED: edttrrr.js");
 })().catch((err) => {
