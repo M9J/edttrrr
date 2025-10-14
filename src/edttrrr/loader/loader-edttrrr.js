@@ -10,7 +10,7 @@ function loadScript(src) {
 }
 
 (async () => {
-  await loadScript("/src/edttrrr/edttrrr.js");
+  await loadScript("./edttrrr/edttrrr.js");
   console.log("LOADED: edttrrr.js");
 })().catch((err) => {
   console.error("Loading sequence failed:", err);
