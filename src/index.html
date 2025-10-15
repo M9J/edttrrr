@@ -8,52 +8,57 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <div class="app-toolbar border-bottom">
-      <div class="app-toolbar-label" id="brand">CodeEditor</div>
-      <div class="app-toolbar-separator"></div>
-      <button
-        class="app-toolbar-button"
-        onclick="EDTTRRR.swapPanes()"
-        title="Swap editor and preview panes"
-      >
-        <img class="app-toolbar-icon-image" src="./assets/icons/arrow-swap-20-filled.svg" />
-      </button>
-      <div class="app-toolbar-label" id="browserZoomLevel">0%</div>
+    <div class="toolbar-frame border-bottom">
+      <div class="app-toolbar top-toolbar">
+        <div class="app-toolbar-label" id="appZoomLevel">0x</div>
+        <div class="app-toolbar-separator"></div>
+        <button
+          class="app-toolbar-button"
+          onclick="EDTTRRR.swapPanes()"
+          title="Swap editor and preview panes"
+        >
+          <img class="app-toolbar-icon-image" src="./assets/icons/arrow-swap-20-filled.svg" />
+        </button>
+        <div class="app-toolbar-separator"></div>
+        <div class="app-toolbar-label" id="browserZoomLevel">0%</div>
+      </div>
     </div>
     <div class="container" id="container">
       <div class="left-pane" id="left-pane">
         <div class="preview-wrapper" id="preview-wrapper">
           <iframe class="preview" id="preview"></iframe>
         </div>
-        <div class="app-toolbar border-top">
-          <div class="app-toolbar-label" id="dimensions">000 &times; 000 pixels</div>
-          <div class="app-toolbar-separator"></div>
-          <button
-            class="app-toolbar-button"
-            id="toolbar-button-pin"
-            onclick="EDTTRRR.togglePin()"
-            title="Pin preview window to the top left anchor point"
-          >
-            <img
-              class="app-toolbar-icon-image"
-              src="./assets/icons/pin-12-filled.svg"
-              data-active-src="./assets/icons/pin-12-filled.svg"
-              data-inactive-src="./assets/icons/pin-12-regular.svg"
-            />
-          </button>
-          <button
-            class="app-toolbar-button"
-            id="toolbar-button-max-screen-preview"
-            onclick="EDTTRRR.toggleMaxScreenPreview()"
-            title="Expand or collapse preview window"
-          >
-            <img
-              class="app-toolbar-icon-image"
-              src="./assets/icons/full-screen-maximize-16-filled.svg"
-              data-active-src="./assets/icons/full-screen-maximize-16-filled.svg"
-              data-inactive-src="./assets/icons/full-screen-minimize-16-filled.svg"
-            />
-          </button>
+        <div class="toolbar-frame border-top">
+          <div class="app-toolbar">
+            <div class="app-toolbar-label" id="dimensions">000 &times; 000 pixels</div>
+            <div class="app-toolbar-separator"></div>
+            <button
+              class="app-toolbar-button"
+              id="toolbar-button-pin"
+              onclick="EDTTRRR.togglePin()"
+              title="Pin preview window to the top left anchor point"
+            >
+              <img
+                class="app-toolbar-icon-image"
+                src="./assets/icons/pin-12-filled.svg"
+                data-active-src="./assets/icons/pin-12-filled.svg"
+                data-inactive-src="./assets/icons/pin-12-regular.svg"
+              />
+            </button>
+            <button
+              class="app-toolbar-button"
+              id="toolbar-button-max-screen-preview"
+              onclick="EDTTRRR.toggleMaxScreenPreview()"
+              title="Expand or collapse preview window"
+            >
+              <img
+                class="app-toolbar-icon-image"
+                src="./assets/icons/full-screen-maximize-16-filled.svg"
+                data-active-src="./assets/icons/full-screen-maximize-16-filled.svg"
+                data-inactive-src="./assets/icons/full-screen-minimize-16-filled.svg"
+              />
+            </button>
+          </div>
         </div>
       </div>
       <div class="resize-handle-horizontal" id="resize-handle-horizontal"></div>
@@ -61,54 +66,27 @@
         <div class="editor-wrapper" id="source-wrapper">
           <div class="editor" id="editor"></div>
         </div>
-        <!-- <div class="elements-wrapper display-none" id="elements-wrapper">
-          <div class="elements" id="elements">Elements panel</div>
-        </div>
-        <div class="styles-wrapper display-none" id="styles-wrapper">
-          <div class="styles" id="styles">Styles panel</div>
-        </div> -->
-        <div class="app-toolbar border-top">
-          <!-- <button
-            class="app-toolbar-button"
-            onclick="EDTTRRR.switchTab('source')"
-            id="app-toolbar-button-tab-source"
-          >
-            Source
-          </button>
-          <button
-            class="app-toolbar-button"
-            onclick="EDTTRRR.switchTab('elements')"
-            id="app-toolbar-button-tab-elements"
-          >
-            Elements
-          </button>
-          <button
-            class="app-toolbar-button"
-            onclick="EDTTRRR.switchTab('styles')"
-            id="app-toolbar-button-tab-styles"
-          >
-            Styles
-          </button> -->
-          <div class="app-toolbar-separator"></div>
-          <button
-            class="app-toolbar-button"
-            id="toolbar-button-max-screen-editor"
-            onclick="EDTTRRR.toggleMaxScreenEditor()"
-            title="Expand or collapse editor window"
-          >
-            <img
-              class="app-toolbar-icon-image"
-              src="./assets/icons/full-screen-maximize-16-filled.svg"
-              data-active-src="./assets/icons/full-screen-maximize-16-filled.svg"
-              data-inactive-src="./assets/icons/full-screen-minimize-16-filled.svg"
-            />
-          </button>
+        <div class="toolbar-frame border-top">
+          <div class="app-toolbar">
+            <div class="app-toolbar-separator"></div>
+            <button
+              class="app-toolbar-button"
+              id="toolbar-button-max-screen-editor"
+              onclick="EDTTRRR.toggleMaxScreenEditor()"
+              title="Expand or collapse editor window"
+            >
+              <img
+                class="app-toolbar-icon-image"
+                src="./assets/icons/full-screen-maximize-16-filled.svg"
+                data-active-src="./assets/icons/full-screen-maximize-16-filled.svg"
+                data-inactive-src="./assets/icons/full-screen-minimize-16-filled.svg"
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>
-    <!-- <script src="https://unpkg.com/monaco-editor@latest/min/vs/loader.js"></script> -->
     <script src="./vs/loader.js"></script>
     <script src="./index.js" type="module" defer></script>
-    <script src="./edttrrr/loader/loader-edttrrr.js" type="module" defer></script>
   </body>
 </html>

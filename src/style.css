@@ -2,6 +2,10 @@
   --brand-border: 1px solid #aaa;
   --brand-border-color: #aaa;
   --accent-color: #4444dd;
+  --devtools-header-bar-color: #3b3b3f;
+  --devtools-content-color: #252529;
+  --devtools-border: 1px solid #5e5e62;
+  --devtools-border-color: #5e5e62;
 }
 
 * {
@@ -17,7 +21,7 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: var(--devtools-content-color);
   box-sizing: border-box;
 }
 
@@ -28,26 +32,29 @@ body {
   user-select: none;
   min-height: 0;
   overflow: hidden;
+  background-color: var(--devtools-content-color);
 }
 
 .left-pane {
-  background-color: #fff;
   border: 0;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   min-height: 0;
-  width: 100%;
-  min-width: calc(50% - 4px);
+  width: calc(100% - 0.5px);
+  min-width: calc(50% - 0.5px);
+  min-height: 0;
   flex: 1;
+  position: relative;
 }
 
 .right-pane {
   flex: 1;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  min-width: calc(50% - 4px);
+  width: calc(100% - 0.5px);
+  min-width: calc(50% - 0.5px);
+  min-height: 0;
   position: relative;
 }
 
@@ -74,7 +81,7 @@ body {
   display: flex;
   flex-direction: row;
   padding: 8px;
-  background: #ddd;
+  background-color: var(--devtools-content-color);
   min-height: 0;
   position: relative;
 }
@@ -89,8 +96,8 @@ body {
   height: 100%;
   border: 0;
   background-color: white;
-  border: var(--brand-border);
-  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .editor-wrapper {
@@ -104,18 +111,18 @@ body {
   font-family: sans-serif;
   position: sticky;
   top: 0;
-  background: #aaa;
+  background: var(--devtools-header-bar-color);
   display: flex;
   justify-content: space-between;
-  /* gap: 1px; */
+  height: 24.5px;
 }
 
 .app-toolbar-label,
 .app-toolbar-button {
+  color: white;
   width: auto;
   padding: 4px 8px;
   font-size: 75%;
-  background-color: #fff;
   user-select: none;
   display: flex;
   align-items: center;
@@ -123,12 +130,15 @@ body {
 }
 
 .app-toolbar-button {
+  color: black;
   cursor: pointer;
   border: 0;
+  background-color: transparent;
+  filter: invert();
 }
 
 .app-toolbar-button:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .app-toolbar-group {
@@ -145,7 +155,6 @@ body {
 
 .app-toolbar-separator {
   flex: 1;
-  background-color: #fff;
 }
 
 .center-content {
@@ -154,11 +163,11 @@ body {
 }
 
 .border-top {
-  border-top: var(--brand-border);
+  border-top: var(--devtools-border);
 }
 
 .border-bottom {
-  border-bottom: var(--brand-border);
+  border-bottom: var(--devtools-border);
 }
 
 .toolbar-is-active-item {
@@ -172,8 +181,7 @@ body {
 }
 
 #brand {
-  background-color: #fff;
-  color: #000;
+  color: white;
   font-weight: 100;
   font-size: 75%;
   display: flex;
@@ -195,6 +203,7 @@ body {
   flex: 1;
   height: 100%;
   width: 100%;
+  position: relative;
 }
 
 .app-toolbar-icon-image {
@@ -211,8 +220,9 @@ body {
 }
 
 .resize-handle-horizontal {
+  display: block;
   width: 1px;
-  background-color: var(--brand-border-color);
+  background-color: var(--devtools-border-color);
   height: 100%;
   position: relative;
   content: "";
@@ -220,8 +230,57 @@ body {
   cursor: col-resize;
   transition: width 0.1s ease;
 }
-/* .resize-handle-horizontal:hover {
-  width: 8px;
-  background-color: var(--accent-color);
-  transition: width 0.1s ease;
-} */
+
+@media screen and (max-width: 1000px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .resize-handle-horizontal {
+    width: 100%;
+    height: 1px;
+  }
+}
+
+.zoom-1-0 {
+  zoom: 1;
+}
+
+.zoom-1-25 {
+  zoom: 1.25;
+}
+
+.zoom-1-5 {
+  zoom: 1.5;
+}
+
+.zoom-1-75 {
+  zoom: 1.75;
+}
+
+.zoom-2-0 {
+  zoom: 2;
+}
+
+.frame {
+  flex: 1;
+  display: flex;
+}
+
+.toolbar-frame {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.margin-top-minus-1-fix {
+  margin-top: -1px;
+}
+
+.flex-direction-column-reverse {
+  flex-direction: column-reverse;
+}
+
+.elements {
+  position: relative;
+}

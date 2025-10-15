@@ -1,5 +1,4 @@
 const rightPane = document.getElementById("right-pane");
-const resizeHandle = document.getElementById("resize-handle-horizontal");
 const previewWrapper = document.getElementById("preview-wrapper");
 
 export function initResizePreviewListener() {
@@ -21,13 +20,11 @@ export function toggleMaxScreenPreview(isMaxScreenPreview) {
   const img = el.querySelector(".app-toolbar-icon-image");
   if (isMaxScreenPreview) {
     rightPane.classList.remove("display-none");
-    resizeHandle.classList.remove("display-none");
     el.classList.remove("toolbar-is-active-item");
     img.src = img.dataset.activeSrc;
     isMaxScreenPreview = false;
   } else {
     rightPane.classList.add("display-none");
-    resizeHandle.classList.add("display-none");
     el.classList.add("toolbar-is-active-item");
     img.src = img.dataset.inactiveSrc;
     isMaxScreenPreview = true;

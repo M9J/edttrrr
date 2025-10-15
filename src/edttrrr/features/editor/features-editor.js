@@ -1,20 +1,17 @@
 const TABS = ["source", "elements", "styles"];
 
 const leftPane = document.getElementById("left-pane");
-const resizeHandle = document.getElementById("resize-handle-horizontal");
 
 export function toggleMaxScreenEditor(isMaxScreenEditor) {
   const el = document.getElementById("toolbar-button-max-screen-editor");
   const img = el.querySelector(".app-toolbar-icon-image");
   if (isMaxScreenEditor) {
     leftPane.classList.remove("display-none");
-    resizeHandle.classList.remove("display-none");
     img.src = img.dataset.activeSrc;
     el.classList.remove("toolbar-is-active-item");
     isMaxScreenEditor = false;
   } else {
     leftPane.classList.add("display-none");
-    resizeHandle.classList.add("display-none");
     img.src = img.dataset.inactiveSrc;
     el.classList.add("toolbar-is-active-item");
     isMaxScreenEditor = true;
