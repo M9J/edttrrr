@@ -8,7 +8,8 @@ export function initResizePreviewListener() {
   const resizeObserver = new ResizeObserver((entries) => {
     for (let entry of entries) {
       const { width, height } = entry.contentRect;
-      output.innerHTML = `${Math.round(width)} &times; ${Math.round(height)} pixels`;
+      const pxlDimensions = `${Math.round(width)} &times; ${Math.round(height)} pixels`;
+      output.innerHTML = `${pxlDimensions}`;
     }
   });
 
