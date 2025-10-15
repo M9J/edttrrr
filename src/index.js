@@ -63,7 +63,7 @@ require(["vs/editor/editor.main"], async function () {
       "editor.background": "#252529",
       "editor.foreground": "#C3CCDC",
       "editorCursor.foreground": "#FFCC00",
-      "editor.lineHighlightBackground": "#2C3143",
+      "editor.lineHighlightBackground": "#2b2b2f",
       "editorLineNumber.foreground": "#3C4353",
       "editorLineNumber.activeForeground": "#C3CCDC",
       "editor.selectionBackground": "#3E4451",
@@ -75,7 +75,7 @@ require(["vs/editor/editor.main"], async function () {
       "editor.wordHighlightBackground": "#3A3F58",
       "editor.wordHighlightStrongBackground": "#4B5263",
       "editorBracketMatch.background": "#3B3F51",
-      "editorBracketMatch.border": "#FFCB6B",
+      "editorBracketMatch.border": "#FFFFFF",
       "editorGutter.background": "#252529",
       "editorOverviewRuler.border": "#00000000",
       "editorHoverWidget.background": "#2A2E3E",
@@ -93,11 +93,11 @@ require(["vs/editor/editor.main"], async function () {
     const previewFrame = document.getElementById("preview");
     const doc = previewFrame.contentDocument || previewFrame.contentWindow.document;
     const appDiv = doc.getElementById("app");
-    appDiv.style.overflow = "hidden";
-    appDiv.style.boxSizing = "border-box";
     if (!appDiv) return;
     const value = editor.getValue()?.trim();
     if (value === "") {
+      appDiv.style.overflow = "hidden";
+      appDiv.style.boxSizing = "border-box";
       appDiv.innerHTML = `<style> body { background: #3b3b3f; user-select: none; overflow: hidden; border: 1px solid transparent; } </style> <div style="width: max-content; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.1; font-family: monospace; font-size: 550%; font-weight: 900;">{&lt;&gt;&lt;/&gt;}</div>`;
     } else {
       appDiv.innerHTML = value; // Just updates the target section
@@ -135,6 +135,13 @@ require(["vs/editor/editor.main"], async function () {
     label: "Format on Save",
     keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS], // Cmd+S (mac) / Ctrl+S (win/linux)
     run: (ed) => ed.getAction("editor.action.formatDocument").run(),
+  });
+
+  editor.addAction({
+    id: "join-lines",
+    label: "Join Lines",
+    keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyJ],
+    run: (ed) => ed.getAction("editor.action.joinLines").run(),
   });
 
   // Restore state after reload
