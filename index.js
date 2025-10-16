@@ -22,6 +22,13 @@ window.MonacoEnvironment = {
 
 // Load Monaco and initialize editor
 require(["vs/editor/editor.main"], async function () {
+  // Ensure MonacoEditorEx is available globally
+  if (typeof MonacoEditorEx !== "undefined") {
+    MonacoEditorEx.useMonacoEx(monaco); // Enable enhanced features
+  } else {
+    console.error("MonacoEditorEx is not loaded. Check your path or script tag.");
+  }
+
   const editor = monaco.editor.create(document.getElementById("editor"), {
     value: ``,
     // value: DUMMY_CODE,
@@ -92,7 +99,7 @@ require(["vs/editor/editor.main"], async function () {
   const previewEditorContent = () => {
     const previewFrame = document.getElementById("preview");
     const doc = previewFrame.contentDocument || previewFrame.contentWindow.document;
-    const appDiv = doc.getElementById("app");
+    const appDiv = doc.querySelector("body");
     if (!appDiv) return;
     const value = editor.getValue()?.trim();
     if (value === "") {

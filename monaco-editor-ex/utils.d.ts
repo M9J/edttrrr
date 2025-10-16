@@ -1,0 +1,10 @@
+import { Position, editor, Uri } from "./monaco";
+export declare function getWordRange(model: editor.ITextModel, position: Position): import("monaco-editor").Range;
+export declare function isScript(value: string | editor.IModel): boolean;
+export declare function isInnerModel(value: string | editor.IModel): boolean;
+export declare function getTempUri(): Uri;
+export declare function newGuid(): string;
+export declare function isFileUri(value: string | Uri): boolean;
+export declare function isRelative(value: string): boolean;
+export declare function getFileName(path: string): string;
+export declare function isSymbolString(value: string): boolean;
