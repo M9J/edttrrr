@@ -2,7 +2,7 @@ import { updateBrowserZoomDisplay, updateAppZoomDisplay } from "./features-appli
 
 export function initializeFeaturesApplication() {
   const previewFrame = document.getElementById("preview");
-  previewFrame.srcdoc = `<html><body><div id='app' style="position: relative; overflow: auto;"></div></body></html>`;
+  previewFrame.srcdoc = `<html><body><div id='app'></div></body></html>`;
   // previewFrame.srcdoc = `<html><body></body></html>`;
   updateBrowserZoomDisplay();
   window.addEventListener("resize", updateBrowserZoomDisplay);
