@@ -30,8 +30,8 @@ require(["vs/editor/editor.main"], async function () {
   }
 
   const editor = monaco.editor.create(document.getElementById("editor"), {
-    value: ``,
-    // value: DUMMY_CODE,
+    // value: ``,
+    value: DUMMY_CODE,
     language: "css",
     theme: "vs-dark", // 'vs' | 'vs-dark' | 'hc-black'
     fontFamily: "monospace",
@@ -99,15 +99,17 @@ require(["vs/editor/editor.main"], async function () {
   const previewEditorContent = () => {
     const previewFrame = document.getElementById("preview");
     const doc = previewFrame.contentDocument || previewFrame.contentWindow.document;
-    const appDiv = doc.querySelector("body");
+    const appDiv = doc.getElementById("app");
+    // const appDiv = doc.querySelector("body");
     if (!appDiv) return;
     const value = editor.getValue()?.trim();
     if (value === "") {
       appDiv.style.overflow = "hidden";
       appDiv.style.boxSizing = "border-box";
-      appDiv.innerHTML = `<style> body { background: #3b3b3f; user-select: none; overflow: hidden; border: 1px solid transparent; } </style> <div style="width: max-content; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.1; font-family: monospace; font-size: 550%; font-weight: 900;">{&lt;&gt;&lt;/&gt;}</div>`;
+      appDiv.innerHTML = `<style> body { background: #3b3b3f; user-select: none; overflow: hidden; border: 1px solid transparent; } </style> <div style="width: max-content; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.1; font-family: monospace; font-size: 525%; font-weight: 900;">{&lt;/&gt;}</div>`;
     } else {
-      appDiv.innerHTML = value; // Just updates the target section
+      // appDiv.innerHTML = value; // Just updates the target section
+      memoizedRecursiveDiff(appDiv, value);
     }
     previewFrame.onload = () => {};
   };
@@ -178,7 +180,7 @@ async function loadEdttrrr() {
     if (typeof window.__previewEditorContent == "function") {
       setTimeout(() => {
         window.__previewEditorContent();
-      }, 100);
+      }, 250);
     }
     document.body.style.visibility = "visible";
     console.log("Happy Learning :)");
@@ -198,41 +200,197 @@ function loadScript(src) {
   });
 }
 
-const DUMMY_CODE = `<style>
-    body {
-        margin: 0;
-    }
+const DUMMY_CODE = `
+  <style>
+	body {
+		margin: 0;
+	}
 
-    .container {
-        display: flex;
-        gap: 24px;
-        background: rgba(0, 0, 255, 0.1);
-        padding: 24px;
-        overflow: auto;
-    }
+	.container {
+		display: flex;
+		gap: 24px;
+		background: rgba(0, 0, 255, 0.1);
+		padding: 24px;
+		overflow: auto;
+		flex-direction: column;
+	}
 
-    .child {
-        border: 1px solid #000;
-        padding: 8px 24px;
-    }
+	.child {
+		border: 1px solid #000;
+		padding: 8px 24px;
+	}
 
-    @media screen and (max-width: 300px) {
-        .child {
-            background: rgba(0, 0, 0, 0.2);
-        }
-    }
+	.focus {
+		background: rgba(0, 0, 255, 0.2);
+	}
+
+	@media screen and (max-width: 300px) {
+		.child {
+			background: rgba(0, 0, 0, 0.2);
+		}
+	}
 </style>
-
 <div class="container">
-    <div class="child">C1</div>
-    <div class="child">C2</div>
-    <div class="child">C3</div>
-    <div class="child">C4</div>
-    <div class="child">C5</div>
-    <div class="child">C6</div>
-    <div class="child">C7</div>
-    <div class="child">C8</div>
-    <div class="child">C9</div>
-</div>`
+	<div class="child">C2</div>
+	<div class="child">C3</div>
+	<div class="child">C4</div>
+	<div class="child focus">C1</div>
+	<div class="child">C5</div>
+	<div class="child">C6</div>
+	<div class="child">C7</div>
+	<div class="child">C8</div>
+	<div class="child">C9</div>
+</div>
+  `
   .split("\n")
   .join("\n");
+
+/**
+ * memoizedRecursiveDiff(targetElement, newHTML)
+ * - Minimal, recursive DOM diff that updates only changed nodes
+ * - Memoizes last HTML per target using a WeakMap
+ * - Records and restores scroll positions for all scrollable elements within target (including children)
+ * - Uses requestAnimationFrame to restore after layout settles
+ *
+ * Usage:
+ *   const app = previewFrame.contentDocument.getElementById("app");
+ *   memoizedRecursiveDiff(app, latestHTML);
+ */
+function memoizedRecursiveDiff(target, newHTML) {
+  memoizedRecursiveDiff.cache = memoizedRecursiveDiff.cache || new WeakMap();
+  const lastHTML = memoizedRecursiveDiff.cache.get(target);
+  if (lastHTML === newHTML) return;
+
+  // --- Helper: capture scrollable elements and their positions (recursive) ---
+  function isScrollable(el) {
+    if (!el || el.nodeType !== 1) return false;
+    const style = el.ownerDocument.defaultView.getComputedStyle(el);
+    return (
+      (style.overflowY && (style.overflowY === "auto" || style.overflowY === "scroll")) ||
+      (style.overflowX && (style.overflowX === "auto" || style.overflowX === "scroll"))
+    );
+  }
+
+  function captureScrollPositions(root) {
+    const map = new Map();
+    const walker = root.ownerDocument.createTreeWalker(root, NodeFilter.SHOW_ELEMENT);
+    let node = root;
+    while (node) {
+      if (isScrollable(node)) {
+        map.set(node, { top: node.scrollTop, left: node.scrollLeft });
+      }
+      node = walker.nextNode();
+    }
+    return map;
+  }
+
+  // --- Helper: create a lightweight virtual node tree from an element -->
+  function toVNode(node) {
+    if (node.nodeType === 3) return { type: "text", text: node.textContent };
+    if (node.nodeType !== 1) return null;
+    const attrs = {};
+    for (let i = 0; i < node.attributes.length; i++) {
+      const a = node.attributes[i];
+      attrs[a.name] = a.value;
+    }
+    const children = Array.from(node.childNodes).map(toVNode).filter(Boolean);
+    return { type: "el", tag: node.tagName.toLowerCase(), attrs, children };
+  }
+
+  // --- Parse newHTML into a fragment and vnodes ---
+  const temp = document.createElement("div");
+  temp.innerHTML = newHTML;
+  const newVNodeList = Array.from(temp.childNodes).map(toVNode);
+
+  // --- Take snapshot of scrollable positions (before DOM mutation) ---
+  const scrollMap = captureScrollPositions(target);
+
+  // --- Core diff: reconcile lists of child nodes at a given parent ---
+  function reconcileChildren(parent, newVNodes) {
+    const oldChildren = Array.from(parent.childNodes);
+    const max = Math.max(oldChildren.length, newVNodes.length);
+
+    for (let i = 0; i < max; i++) {
+      const oldNode = oldChildren[i];
+      const newVNode = newVNodes[i];
+
+      // remove excess old nodes
+      if (!newVNode && oldNode) {
+        parent.removeChild(oldNode);
+        continue;
+      }
+
+      // append new nodes if old missing
+      if (newVNode && !oldNode) {
+        parent.appendChild(createDomFromVNode(newVNode, parent.ownerDocument));
+        continue;
+      }
+
+      // both exist -> diff
+      if (newVNode && oldNode) {
+        if (newVNode.type === "text" && oldNode.nodeType === 3) {
+          if (oldNode.textContent !== newVNode.text) oldNode.textContent = newVNode.text;
+        } else if (newVNode.type === "text" && oldNode.nodeType !== 3) {
+          parent.replaceChild(parent.ownerDocument.createTextNode(newVNode.text), oldNode);
+        } else if (oldNode.nodeType === 1) {
+          // element vs element: compare tag
+          if (oldNode.tagName.toLowerCase() !== newVNode.tag) {
+            parent.replaceChild(createDomFromVNode(newVNode, parent.ownerDocument), oldNode);
+          } else {
+            // update attributes (simple strategy: remove absent, set changed)
+            updateAttributes(oldNode, newVNode.attrs);
+            // recurse into children
+            reconcileChildren(oldNode, newVNode.children);
+          }
+        } else {
+          // fallback replace
+          parent.replaceChild(createDomFromVNode(newVNode, parent.ownerDocument), oldNode);
+        }
+      }
+    }
+  }
+
+  // --- Create DOM node from vnode ---
+  function createDomFromVNode(vn, doc) {
+    if (vn.type === "text") return doc.createTextNode(vn.text);
+    const el = doc.createElement(vn.tag);
+    for (const k in vn.attrs) el.setAttribute(k, vn.attrs[k]);
+    for (const c of vn.children) el.appendChild(createDomFromVNode(c, doc));
+    return el;
+  }
+
+  // --- Update attributes minimal ---
+  function updateAttributes(el, newAttrs) {
+    // remove old attrs that are not present
+    const toRemove = [];
+    for (let i = 0; i < el.attributes.length; i++) {
+      const a = el.attributes[i];
+      if (!(a.name in newAttrs)) toRemove.push(a.name);
+    }
+    toRemove.forEach((n) => el.removeAttribute(n));
+    // set new / changed attrs
+    for (const k in newAttrs) {
+      if (el.getAttribute(k) !== newAttrs[k]) el.setAttribute(k, newAttrs[k]);
+    }
+  }
+
+  // --- Run reconciliation on target's children ---
+  reconcileChildren(target, newVNodeList);
+
+  // --- Restore scroll positions after layout settles ---
+  requestAnimationFrame(() => {
+    // small double RAF to be safer if images/fonts cause reflow
+    requestAnimationFrame(() => {
+      for (const [node, pos] of scrollMap.entries()) {
+        // If node still in DOM, restore
+        if (node.isConnected) {
+          node.scrollTop = pos.top;
+          node.scrollLeft = pos.left;
+        }
+      }
+    });
+  });
+
+  // --- Update cache ---
+  memoizedRecursiveDiff.cache.set(target, newHTML);
+}
