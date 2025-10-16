@@ -1,0 +1,14 @@
+import { Command, Range, TextEdit, MarkupContent, MarkedString, FoldingRangeKind, WorkspaceEdit, SymbolKind, Location, DocumentHighlightKind } from "vscode-css-languageservice";
+import type { IMarkdownString, IRange, languages, Range as MonacoRange } from "../monaco";
+export declare function getCssService(): import("vscode-css-languageservice").LanguageService;
+export declare function toCommand(c: Command | undefined): languages.Command | undefined;
+export declare function toCompletionItemKind(kind: number | undefined): languages.CompletionItemKind;
+export declare function toRange(range: Range | undefined): MonacoRange | undefined;
+export declare function toTextEdit(textEdit: TextEdit | undefined): languages.TextEdit | undefined;
+export declare function toMarkedStringArray(contents: MarkupContent | MarkedString | MarkedString[]): IMarkdownString[] | undefined;
+export declare function toFoldingRangeKind(kind: FoldingRangeKind): languages.FoldingRangeKind | undefined;
+export declare function fromRange(range: IRange | undefined): Range | undefined;
+export declare function toWorkspaceEdit(edit: WorkspaceEdit | null): languages.WorkspaceEdit | undefined;
+export declare function toSymbolKind(kind: SymbolKind): languages.SymbolKind;
+export declare function toLocation(location: Location): languages.Location;
+export declare function toDocumentHighlightKind(kind: DocumentHighlightKind | undefined): languages.DocumentHighlightKind;
