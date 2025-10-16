@@ -104,11 +104,12 @@ require(["vs/editor/editor.main"], async function () {
     if (!appDiv) return;
     const value = editor.getValue()?.trim();
     if (value === "") {
-      appDiv.style.overflow = "hidden";
       appDiv.style.boxSizing = "border-box";
       appDiv.innerHTML = `<style> body { background: #3b3b3f; user-select: none; overflow: hidden; border: 1px solid transparent; } </style> <div style="width: max-content; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.1; font-family: monospace; font-size: 525%; font-weight: 900;">{&lt;/&gt;}</div>`;
     } else {
       // appDiv.innerHTML = value; // Just updates the target section
+      // appDiv.style.position = "relative";
+      // appDiv.style.overflow = "auto";
       memoizedRecursiveDiff(appDiv, value);
     }
     previewFrame.onload = () => {};
