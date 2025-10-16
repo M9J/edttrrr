@@ -1,4 +1,4 @@
-import { getFromLocalStorage } from "../../utils/localStorage.js";
+import { getFromLocalStorage, setToLocalStorage } from "../../utils/localStorage.js";
 
 const container = document.getElementById("container");
 const appToolbars = document.querySelectorAll(".app-toolbar");
@@ -11,15 +11,24 @@ export function updateBrowserZoomDisplay() {
 }
 
 export function updateAppZoomDisplay() {
-  const parsedUrl = new URL(location.href);
-  const params = new URLSearchParams(parsedUrl.search);
-  const appZoomLevel = params.get("zoom");
+  const params = new URLSearchParams(location.search);
+  const appZoomLevel = params.get("zoom") || getFromLocalStorage("appZoomLevel");
   const isAllowedZoomLevel = parseFloat(appZoomLevel) >= 1.0 && parseFloat(appZoomLevel) <= 2.0;
   if (isAllowedZoomLevel) {
     document.getElementById("appZoomLevel").textContent = `${appZoomLevel}x`;
-    appToolbars.forEach((t) => t.classList.add("zoom-" + appZoomLevel.replace(".", "-")));
-    appPreview.classList.add("zoom-" + appZoomLevel.replace(".", "-"));
-    appEditor.classList.add("zoom-" + appZoomLevel.replace(".", "-"));
+    const cls = "zoom-" + appZoomLevel.replace(".", "-");
+    appToolbars.forEach((t) => t.classList.add(cls));
+    appPreview.classList.add(cls);
+    appEditor.classList.add(cls);
+    setToLocalStorage("appZoomLevel", appZoomLevel);
+
+    // If zoom was not present in the URL, or differs from stored value, update it
+    if (params.get("zoom") !== appZoomLevel) {
+      params.set("zoom", appZoomLevel);
+      const newSearch = params.toString();
+      const newUrl = location.pathname + (newSearch ? "?" + newSearch : "") + location.hash;
+      history.replaceState(null, "", newUrl);
+    }
   }
 }
 
