@@ -30,8 +30,8 @@ require(["vs/editor/editor.main"], async function () {
   }
 
   const editor = monaco.editor.create(document.getElementById("editor"), {
-    // value: ``,
-    value: DUMMY_CODE,
+    value: ``,
+    // value: DUMMY_CODE,
     language: "css",
     theme: "vs-dark", // 'vs' | 'vs-dark' | 'hc-black'
     fontFamily: "monospace",
